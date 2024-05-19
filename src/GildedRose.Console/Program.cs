@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace GildedRose.Console
 {
@@ -37,40 +38,25 @@ namespace GildedRose.Console
 
 		public void UpdateQuality()
 		{
-			Items.ToList().ForEach(item => {
-				if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert" && item.Name != "Sulfuras, Hand of Ragnaros" && item.Quality > 0)
-				{
-					item.Quality = item.Quality - 1;
-				}
-				if ((item.Name == "Aged Brie" || item.Name == "Backstage passes to a TAFKAL80ETC concert") && item.Quality < 50)
-				{
-					item.Quality = item.Quality + 1;
-				}
-				if ((item.Name == "Aged Brie" || item.Name == "Backstage passes to a TAFKAL80ETC concert") && item.Name == "Backstage passes to a TAFKAL80ETC concert" && item.SellIn < 11 && item.Quality < 50)
-				{
-					item.Quality = item.Quality + 1;
-				}
-				if ((item.Name == "Aged Brie" || item.Name == "Backstage passes to a TAFKAL80ETC concert") && item.Name == "Backstage passes to a TAFKAL80ETC concert" && item.SellIn < 6 & item.Quality < 50)
-				{
-					item.Quality = item.Quality + 1;
-				}
-				if (item.Name != "Sulfuras, Hand of Ragnaros")
-				{
-					item.SellIn = item.SellIn - 1;
-				}
-				if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert" && item.Name != "Sulfuras, Hand of Ragnaros" && item.Quality > 0 && item.SellIn < 0)
-				{
-					item.Quality = item.Quality - 1;
-				}
-				if (item.Name != "Aged Brie" && item.Name == "Backstage passes to a TAFKAL80ETC concert" && item.SellIn < 0)
-				{
-					item.Quality = item.Quality - item.Quality;
-				}
-				if (item.Name == "Aged Brie" && item.Quality < 50 && item.SellIn < 0)
-				{
-					item.Quality = item.Quality + 1;
-				}
-			});
+			try
+			{
+				Items.ToList().ForEach(item => {
+					if (item.Name?.ToLower()?.Trim()?.Contains("aged brie") ?? false)
+						new ItemOperations(new AgedBreeItem(item)).UpdateQuality();
+					else if (item.Name?.ToLower()?.Trim()?.Contains("backstage passes") ?? false)
+						new ItemOperations(new BackstagePassItem(item)).UpdateQuality();
+					else if (item.Name?.ToLower()?.Trim()?.Contains("sulfuras") ?? false)
+						new ItemOperations(new SulfurasItem(item)).UpdateQuality();
+					else if (item.Name?.ToLower()?.Trim()?.Contains("conjured") ?? false)
+						new ItemOperations(new ConjuredItem(item)).UpdateQuality();
+					else
+						new ItemOperations(new RegularItem(item)).UpdateQuality();
+				});
+			}
+			catch (System.Exception ex)
+			{
+				string err = ex.Message;
+			}
 		}
 
 	}
@@ -84,4 +70,99 @@ namespace GildedRose.Console
 		public int Quality { get; set; }
 	}
 
+	public interface IItemOperations
+	{
+		void UpdateQuality();
+	}
+
+	public class AgedBreeItem : IItemOperations
+	{
+		private Item _item;
+		public AgedBreeItem(Item item)
+		{
+			_item = item;
+		}
+		public void UpdateQuality()
+		{
+			if (_item.SellIn <= 0 && _item.Quality < 50)
+				_item.Quality = _item.Quality + 1;
+			if (_item.Quality < 50)
+				_item.Quality = _item.Quality + 1;
+			_item.SellIn = _item.SellIn - 1;
+		}
+	}
+	public class BackstagePassItem : IItemOperations
+	{
+		private Item _item;
+		public BackstagePassItem(Item item)
+		{
+			_item = item;
+		}
+		public void UpdateQuality()
+		{
+			if (_item.Quality < 50)
+				_item.Quality = _item.Quality + 1;
+			if (_item.Quality < 50 && _item.SellIn < 11 && _item.Quality < 50)
+				_item.Quality = _item.Quality + 1;
+			if (_item.Quality < 50 && _item.SellIn < 6 && _item.Quality < 50)
+				_item.Quality = _item.Quality + 1;
+			if (_item.SellIn <= 0)
+				_item.Quality = _item.Quality - _item.Quality;
+			_item.SellIn = _item.SellIn - 1;
+		}
+	}
+	public class SulfurasItem : IItemOperations
+	{
+		private Item _item;
+		public SulfurasItem(Item item)
+		{
+			_item = item;
+		}
+		public void UpdateQuality()
+		{
+		}
+	}
+	public class ConjuredItem : IItemOperations
+	{
+		private Item _item;
+		public ConjuredItem(Item item)
+		{
+			_item = item;
+		}
+		public void UpdateQuality()
+		{
+			_item.Quality = _item.Quality - 2;
+			if (_item.SellIn <= 0)
+				_item.Quality = _item.Quality - 2;
+			_item.SellIn = _item.SellIn - 1;
+		}
+	}
+	public class RegularItem : IItemOperations
+	{
+		private Item _item;
+		public RegularItem(Item item)
+		{
+			_item = item;
+		}
+		public void UpdateQuality()
+		{
+			if (_item.Quality > 0)
+				_item.Quality = _item.Quality - 1;
+			if (_item.SellIn < 0 && _item.Quality > 0)
+				_item.Quality = _item.Quality - 1;
+			_item.SellIn = _item.SellIn - 1;
+		}
+	}
+	public class ItemOperations
+	{
+		private readonly IItemOperations _itemOperations;
+        public ItemOperations(IItemOperations itemOperations)
+        {
+			_itemOperations = itemOperations;
+		}
+		public void UpdateQuality()
+		{
+			_itemOperations.UpdateQuality();
+		}
+	}
 }

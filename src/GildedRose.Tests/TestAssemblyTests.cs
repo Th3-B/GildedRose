@@ -201,6 +201,39 @@ namespace GildedRose.Tests
 		#endregion
 
 		#region "Conjured" items degrade in Quality twice as fast as normal items
+		[Fact]
+		//Test: Conjured items degrade in Quality twice as fast as normal items
+		public void TestConjuredQualityToDegrade()
+		{
+			Item backstageItem = new Item() { Name = "Conjured", Quality = 8, SellIn = 4 };
+
+			Program appTest = CreateProgramInstance(backstageItem);
+			appTest.UpdateQuality();
+
+			Assert.Equal(6, backstageItem.Quality);
+		}
+		[Fact]
+		//Test: Conjured items degrade in Quality twice as fast as normal items
+		public void TestConjuredQualityToDegradeAfterSellIn()
+		{
+			Item backstageItem = new Item() { Name = "Conjured", Quality = 8, SellIn = 0 };
+
+			Program appTest = CreateProgramInstance(backstageItem);
+			appTest.UpdateQuality();
+
+			Assert.Equal(4, backstageItem.Quality);
+		}
+		[Fact]
+		//Test: Conjured items degrade in Quality twice as fast as normal items
+		public void TestConjuredSellInDecrease()
+		{
+			Item backstageItem = new Item() { Name = "Conjured", Quality = 8, SellIn = 4 };
+
+			Program appTest = CreateProgramInstance(backstageItem);
+			appTest.UpdateQuality();
+
+			Assert.Equal(3, backstageItem.SellIn);
+		}
 		#endregion
 	}
 }
