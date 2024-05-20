@@ -20,7 +20,7 @@ namespace GildedRose.Tests
 		#region At the end of each day our system lowers both values for every item
 		[Fact]
 		//Test: At the end of each day our system lowers quality
-		public void TestQualityDecrese()
+		public void TestQualityDecrease()
 		{
 			Item testItem = new Item() { Name = "Test Item", Quality = 20, SellIn = 10 };
 
@@ -32,7 +32,7 @@ namespace GildedRose.Tests
 
 		[Fact]
 		//Test: At the end of each day our system lowers SellIn
-		public void TestSellInDecrese()
+		public void TestSellInDecrease()
 		{
 			Item testItem = new Item() { Name = "Test Item", Quality = 20, SellIn = 10 };
 
@@ -45,8 +45,8 @@ namespace GildedRose.Tests
 
 		#region Once the sell by date has passed, Quality degrades twice as fast
 		[Fact]
-		//Test: Quality is decresed twise when sell by date has passed
-		public void TestQualityDecreseTwiseWhenSellInPassed()
+		//Test: Quality is decreased twise when sell by date has passed
+		public void TestQualityDecreaseTwiseWhenSellInPassed()
 		{
 			Item testItem = new Item() { Name = "Test Item", Quality = 20, SellIn = -1 };
 
@@ -205,7 +205,7 @@ namespace GildedRose.Tests
 		//Test: Conjured items degrade in Quality twice as fast as normal items
 		public void TestConjuredQualityToDegrade()
 		{
-			Item backstageItem = new Item() { Name = "Conjured", Quality = 8, SellIn = 4 };
+			Item backstageItem = new Item() { Name = "Conjured Mana Cake", Quality = 8, SellIn = 4 };
 
 			Program appTest = CreateProgramInstance(backstageItem);
 			appTest.UpdateQuality();
@@ -216,7 +216,7 @@ namespace GildedRose.Tests
 		//Test: Conjured items degrade in Quality twice as fast as normal items
 		public void TestConjuredQualityToDegradeAfterSellIn()
 		{
-			Item backstageItem = new Item() { Name = "Conjured", Quality = 8, SellIn = 0 };
+			Item backstageItem = new Item() { Name = "Conjured Mana Cake", Quality = 8, SellIn = 0 };
 
 			Program appTest = CreateProgramInstance(backstageItem);
 			appTest.UpdateQuality();
@@ -227,7 +227,7 @@ namespace GildedRose.Tests
 		//Test: Conjured items degrade in Quality twice as fast as normal items
 		public void TestConjuredSellInDecrease()
 		{
-			Item backstageItem = new Item() { Name = "Conjured", Quality = 8, SellIn = 4 };
+			Item backstageItem = new Item() { Name = "Conjured Mana Cake", Quality = 8, SellIn = 4 };
 
 			Program appTest = CreateProgramInstance(backstageItem);
 			appTest.UpdateQuality();
