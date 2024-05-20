@@ -1,13 +1,9 @@
 ﻿namespace GildedRose.Console
 {
-	public class AgedBreeItem : IItemOperations
+	public class AgedBreeItem : BaseItem
 	{
-		private Item _item;
-		public AgedBreeItem(Item item)
-		{
-			_item = item;
-		}
-		public void UpdateQuality()
+		public AgedBreeItem(Item item) : base(item) { }
+		public override void UpdateQuality()
 		{
 			if (_item.SellIn <= 0 && _item.Quality < 50)
 				_item.Quality = _item.Quality + 1;

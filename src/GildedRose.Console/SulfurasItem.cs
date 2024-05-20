@@ -1,13 +1,9 @@
 ﻿namespace GildedRose.Console
 {
-	public class SulfurasItem : IItemOperations
+	public class SulfurasItem : BaseItem
 	{
-		private Item _item;
-		public SulfurasItem(Item item)
-		{
-			_item = item;
-		}
-		public void UpdateQuality()
+		public SulfurasItem(Item item) : base(item) { }
+		public override void UpdateQuality()
 		{
 		}
 	}

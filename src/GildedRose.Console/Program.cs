@@ -45,38 +45,38 @@ namespace GildedRose.Console
 					switch (item.Name)
 					{
 						case string itemName when itemName?.ToLower()?.Trim()?.Contains("aged brie") ?? false:
-							new ItemOperations(new AgedBreeItem(item)).UpdateQuality();
+							new AgedBreeItem(item).UpdateQuality();
 							break;
 						case string itemName when itemName?.ToLower()?.Trim()?.Contains("backstage passes") ?? false:
-							new ItemOperations(new BackstagePassItem(item)).UpdateQuality();
+							new BackstagePassItem(item).UpdateQuality();
 							break;
 						case string itemName when itemName?.ToLower()?.Trim()?.Contains("sulfuras") ?? false:
-							new ItemOperations(new SulfurasItem(item)).UpdateQuality();
+							new SulfurasItem(item).UpdateQuality();
 							break;
 						case string itemName when itemName?.ToLower()?.Trim()?.Contains("conjured") ?? false:
-							new ItemOperations(new ConjuredItem(item)).UpdateQuality();
+							new ConjuredItem(item).UpdateQuality();
 							break;
 						default:
-							new ItemOperations(new RegularItem(item)).UpdateQuality();
+							new RegularItem(item).UpdateQuality();
 							break;
 					}
 					/* THIS SWITCH CASE WILL CHECK FOR CASE SENSITIVE NAMES 
 					switch (item.Name)
 					{
 						case "Aged Brie":
-							new ItemOperations(new AgedBreeItem(item)).UpdateQuality();
+							new AgedBreeItem(item).UpdateQuality();
 							break;
 						case "Backstage passes to a TAFKAL80ETC concert":
-							new ItemOperations(new BackstagePassItem(item)).UpdateQuality();
+							new BackstagePassItem(item).UpdateQuality();
 							break;
 						case "Sulfuras, Hand of Ragnaros":
-							new ItemOperations(new SulfurasItem(item)).UpdateQuality();
+							new SulfurasItem(item).UpdateQuality();
 							break;
 						case "Conjured Mana Cake":
-							new ItemOperations(new ConjuredItem(item)).UpdateQuality();
+							new ConjuredItem(item).UpdateQuality();
 							break;
 						default:
-							new ItemOperations(new RegularItem(item)).UpdateQuality();
+							new RegularItem(item).UpdateQuality();
 							break;
 					}
 					*/

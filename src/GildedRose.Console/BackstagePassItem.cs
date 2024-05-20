@@ -1,13 +1,9 @@
 ﻿namespace GildedRose.Console
 {
-	public class BackstagePassItem : IItemOperations
+	public class BackstagePassItem : BaseItem
 	{
-		private Item _item;
-		public BackstagePassItem(Item item)
-		{
-			_item = item;
-		}
-		public void UpdateQuality()
+		public BackstagePassItem(Item item) : base(item) { }
+		public override void UpdateQuality()
 		{
 			if (_item.Quality < 50)
 				_item.Quality = _item.Quality + 1;
